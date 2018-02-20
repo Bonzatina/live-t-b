@@ -1,0 +1,69 @@
+
+
+{% extends "_layout" %}
+{% set title = "Contacts" %}
+
+{% block content %}
+
+    <style>
+        .contacts {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+    </style>
+
+<div class="contacts">
+
+    <div class="contacts_data">
+        <h1>{{ entry.title }}</h1>
+        {{ entry.body }}
+    </div>
+    <div class="contacts_form">
+        {% macro errorList(errors) %}
+            {% if errors %}
+
+                    {% for error in errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+
+            {% endif %}
+        {% endmacro %}
+
+        {% from _self import errorList %}
+
+        <h1>Форма обратной связи</h1>
+
+        <form method="post" action="" accept-charset="UTF-8">
+            {{ getCsrfInput() }}
+            <input type="hidden" name="action" value="contactForm/sendMessage">
+            <input type="hidden" name="redirect" value="contacts/thanks?from={fromName}">
+
+
+            <p><label for="fromName">Имя</label></p>
+            <input id="fromName" type="text" name="fromName" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
+            {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
+
+            <p><label for="fromEmail">Email</label></p>
+            <input id="fromEmail" type="email" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}">
+            {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
+
+            <p><label for="subject">Бюджет</label></p>
+            <input id="subject" type="number" name="subject" value="{% if message is defined %}{{ message.subject }}{% endif %}">
+            {{ message is defined and message ? errorList(message.getErrors('subject')) }}
+
+            <p><label for="message">Сообщение</label></p>
+            <p><textarea rows="10" cols="40" id="message" name="message">{% if message is defined %}{{ message.message }}{% endif %}</textarea>
+            {{ message is defined and message ? errorList(message.getErrors('message')) }}
+            </p>
+
+            <input type="submit" value="Отправить">
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
