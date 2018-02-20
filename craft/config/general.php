@@ -10,8 +10,8 @@
 return array(
 
 	// Base site URL
-//	'siteUrl' => 'http://localhost/craft/public/',
-	'siteUrl' => 'https://live-t-b.herokuapp.com/',
+	'siteUrl' => 'http://localhost/craft/public/',
+//	'siteUrl' => 'https://live-t-b.herokuapp.com/',
 
 	// Environment-specific variables (see https://craftcms.com/docs/multi-environment-configs#environment-specific-variables)
 	'environmentVariables' => array(),
